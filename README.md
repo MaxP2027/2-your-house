@@ -1,3 +1,14 @@
+> Sprint 1 code is now in progress. See [current status and verification](docs/SPRINT-1-STATUS.md). The original proposal below describes planned capabilities, not completed functionality.
+
+## Run the current increment
+
+Requires Node.js 22 or newer and npm. Run `npm ci`, then `npm run dev` and open http://127.0.0.1:3000. The homepage runs without Supabase configuration.
+
+For real accounts, install/start Docker, run `npm run db:start`, then `npm run db:reset` against the local project only. Copy `.env.example` to `.env.local` and fill in the local publishable key from `npx supabase status`. Restart the application. Open the local email inbox at http://127.0.0.1:54324 to confirm test accounts.
+
+Use `npm run lint`, `npm run typecheck`, and `npm run build` for the checks currently verified. Browser and authentication integration tests remain pending. Never put service-role keys in public environment variables.
+
+---
 # HVAC Connect
 
 A planned web application connecting homeowners with freelance HVAC technicians in their city.

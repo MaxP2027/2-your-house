@@ -1,4 +1,4 @@
-﻿import { createServerClient } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseConfig, hasSupabaseConfig } from "@/lib/config";
 
@@ -43,5 +43,6 @@ export const config = {
     "/signup",
     "/check-email",
     "/api/me",
+    "/api/marketplace",
   ],
 };

@@ -1,4 +1,4 @@
-﻿project_id = "2-your-house"
+project_id = "2-your-house"
 
 [api]
 enabled = true
@@ -28,7 +28,7 @@ enabled = true
 port = 54324
 
 [realtime]
-enabled = false
+enabled = true
 
 [storage]
 enabled = false

@@ -2,30 +2,48 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAccount } from "@/lib/auth";
 import AccountForm from "@/components/account-form";
+import Workspace from "@/components/marketplace/workspace";
+import "../marketplace.css";
 export const dynamic = "force-dynamic";
 export default async function Page() {
   const account = await getAccount();
   if (!account) redirect("/login");
   return (
-    <main className="account">
-      <Link href="/">HVAC Connect</Link>
-      <h1>Your account</h1>
+    <div className="workspace">
+      <a className="skip-link" href="#workspace-main">
+        Skip to workspace
+      </a>
+      <header className="workspace-header">
+        <Link href="/" className="workspace-brand">
+          HVAC Connect<span>Local people. Lasting comfort.</span>
+        </Link>
+        <div className="workspace-header-actions">
+          <Link href="/">Homepage</Link>
+          <details className="account-menu">
+            <summary>Your account</summary>
+            <div>
+              <strong>{account.profile?.full_name ?? "Account"}</strong>
+              <p>{account.user.email}</p>
+              <p>Account type: {account.profile?.role ?? "Unavailable"}</p>
+              <AccountForm mode="logout" />
+            </div>
+          </details>
+        </div>
+      </header>
       {account.profile ? (
-        <>
-          <h2>Welcome, {account.profile.full_name}</h2>
-          <p>{account.user.email}</p>
-          <p>Account type: {account.profile.role}</p>
-          <p>
-            {account.profile.role === "technician"
-              ? "Your next local connection starts here."
-              : "Your journey to a more comfortable home starts here."}{" "}
-            Service requests are coming in a future release.
-          </p>
-        </>
+        <Workspace
+          role={account.profile.role}
+          fullName={account.profile.full_name}
+        />
       ) : (
-        <p role="alert">Your profile is unavailable. Please try again later.</p>
+        <main id="workspace-main" className="work-card">
+          <h1>Your profile is unavailable</h1>
+          <p role="alert">
+            We could not load your account profile. Please try again later.
+          </p>
+          <AccountForm mode="logout" />
+        </main>
       )}
-      <AccountForm mode="logout" />
-    </main>
+    </div>
   );
 }

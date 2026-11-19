@@ -36,12 +36,13 @@ export default function Home() {
             </Link>
           </div>
           <p className="note">
-            Start with your account. Service requests and local technician
-            discovery are coming in a future release.
+            Create an account to find technicians and request an appointment.
+            Local technician discovery and private messaging are available in
+            your dashboard.
           </p>
         </section>
         <section id="how-it-works">
-          <p className="eyebrow">The connection we&apos;re building</p>
+          <p className="eyebrow">How it works</p>
           <h2>From a problem to a plan.</h2>
           <div className="grid">
             {[

@@ -1,0 +1,680 @@
+.workspace {
+  min-height: 100vh;
+  background: #f3f6f5;
+  color: #173f38;
+  font-size: 1rem;
+}
+.workspace * {
+  box-sizing: border-box;
+}
+.workspace .skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -8rem;
+  z-index: 20;
+  background: white;
+  padding: 1rem;
+}
+.workspace .skip-link:focus {
+  top: 1rem;
+}
+.workspace-header {
+  background: #fff;
+  padding: 1.25rem max(1.5rem, calc((100vw - 1240px) / 2));
+  border-bottom: 1px solid #dce5e1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.workspace-brand {
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  font-weight: 800;
+}
+.workspace-brand span {
+  display: block;
+  font-weight: 400;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+  color: #536b61;
+  margin-top: 0.25rem;
+}
+.workspace-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.workspace-header-actions > a {
+  font-size: 0.95rem;
+}
+.workspace .account-menu {
+  position: relative;
+}
+.workspace .account-menu summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.workspace .account-menu > div {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  z-index: 30;
+  width: 290px;
+  max-width: 85vw;
+  background: white;
+  border: 1px solid #cadbd2;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px #143b2820;
+  padding: 1.3rem;
+  overflow-wrap: anywhere;
+}
+.workspace .account-menu p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.workspace-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.8rem max(1.5rem, calc((100vw - 1240px) / 2));
+  background: #fff;
+  border-bottom: 1px solid #dce5e1;
+}
+.workspace .workspace-nav button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #475e55;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.15rem;
+  min-height: 44px;
+}
+.workspace .workspace-nav button.active {
+  background: #e5f2ec;
+  border-color: #bfd6c8;
+  color: #114f3f;
+}
+.workspace-main {
+  max-width: 1288px;
+  padding: 2.25rem 1.5rem 4rem;
+  margin: auto;
+}
+.workspace h1 {
+  font-size: clamp(1.9rem, 3.4vw, 2.65rem);
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+  margin: 0.5rem 0;
+}
+.workspace h2 {
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0 0 0.8rem;
+}
+.workspace h3 {
+  font-size: 1.2rem;
+  margin: 0.25rem 0 0.75rem;
+}
+.workspace p {
+  line-height: 1.65;
+}
+.workspace .eyebrow {
+  font-size: 0.875rem;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+  color: #537064;
+  margin: 0;
+}
+.workspace-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.7rem;
+}
+.workspace-lead {
+  max-width: 760px;
+  color: #51675e;
+  font-size: 1.05rem;
+  margin: 0.5rem 0 1.5rem;
+}
+.workspace .work-card {
+  padding: 1.5rem;
+  border: 1px solid #dce5df;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 4px #173f3804;
+  min-width: 0;
+}
+.workspace section {
+  padding: 1.5rem;
+}
+.workspace .muted {
+  font-size: 0.9rem;
+  color: #52675d;
+  line-height: 1.55;
+}
+.workspace .empty {
+  text-align: center;
+  padding: 2rem;
+  color: #51675e;
+}
+.workspace .empty h2 {
+  color: #234e40;
+}
+.workspace .work-alert,
+.workspace .work-notice {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin: 0 0 1rem;
+}
+.workspace .work-alert {
+  background: #fff3ef;
+  border: 1px solid #d9917d;
+  color: #8d291c;
+}
+.workspace .work-notice {
+  background: #e4f4e9;
+  border: 1px solid #a0c5ac;
+  color: #235a36;
+}
+.workspace .work-alert button {
+  margin-left: 1rem;
+}
+.workspace button {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  min-height: 44px;
+  border: 1px solid #174e42;
+  background: #174e42;
+  padding: 0.8rem 1.15rem;
+  border-radius: 7px;
+  font-weight: 600;
+}
+.workspace button:hover:not(:disabled) {
+  background: #0f3d33;
+}
+.workspace button.subtle {
+  background: #fff;
+  color: #204f40;
+  border-color: #bed0c5;
+}
+.workspace button.subtle:hover:not(:disabled) {
+  background: #eff5f1;
+}
+.workspace .refresh-button,
+.workspace .view-toggle button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.workspace button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.workspace input,
+.workspace textarea,
+.workspace select {
+  width: 100%;
+  font: inherit;
+  color: #173f38;
+  padding: 0.8rem;
+  border: 1px solid #8ba396;
+  border-radius: 7px;
+  background: #fff;
+  min-height: 44px;
+  margin: 0.4rem 0 0;
+}
+.workspace textarea {
+  display: block;
+  resize: vertical;
+  line-height: 1.5;
+}
+.workspace textarea:focus-visible,
+.workspace summary:focus-visible {
+  outline: 3px solid #bb5d24;
+  outline-offset: 4px;
+}
+.workspace select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23174e42' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+}
+.workspace label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+.workspace form button {
+  margin-top: 0.4rem;
+}
+.workspace .field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.workspace .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 500;
+}
+.workspace .checkbox-label input {
+  width: 20px;
+  min-height: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #174e42;
+}
+.workspace .city-search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid #a9bfb3;
+  border-radius: 9px;
+  padding: 0 1rem;
+  max-width: 470px;
+  margin-bottom: 1.5rem;
+}
+.workspace .city-search input {
+  border: 0;
+  margin: 0;
+  padding: 0.95rem 0.25rem;
+  background: transparent;
+}
+.workspace .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.workspace .technician-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+.workspace .technician-card {
+  display: flex;
+  flex-direction: column;
+}
+.workspace .technician-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #e3efe7;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #205843;
+  margin-bottom: 1.2rem;
+}
+.workspace .technician-card h2 {
+  margin-bottom: 0.4rem;
+}
+.workspace .icon-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.workspace .icon-line svg {
+  flex-shrink: 0;
+  margin-top: 0.3rem;
+}
+.workspace .technician-card .icon-line {
+  margin: 0.25rem 0 0.9rem;
+}
+.workspace .service-label {
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.workspace .bio {
+  color: #52675d;
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+.workspace .availability-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+.workspace .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+.workspace .section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.workspace .inline-label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.5rem 0 1rem;
+}
+.workspace .inline-label select {
+  width: auto;
+  margin: 0;
+}
+.workspace .request-form {
+  max-width: 850px;
+}
+.workspace .request-list {
+  display: grid;
+  gap: 1rem;
+}
+.workspace .request-description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 1rem 0;
+}
+.workspace .request-card .muted {
+  margin: 0;
+}
+.workspace .status-badge {
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  background: #edf0ee;
+  color: #405b4e;
+}
+.workspace .status-pending {
+  background: #fff0cd;
+  color: #76520a;
+}
+.workspace .status-accepted {
+  background: #dcf0e3;
+  color: #245a37;
+}
+.workspace .status-completed {
+  background: #e1edf7;
+  color: #285472;
+}
+.workspace .status-declined,
+.workspace .status-cancelled {
+  background: #f6e7e3;
+  color: #7c4136;
+}
+.workspace .day-banner {
+  background: #164e42;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.workspace .day-banner > div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.workspace .day-banner strong {
+  display: block;
+  font-size: 1.3rem;
+}
+.workspace .day-banner span {
+  display: block;
+  color: #e0ede5;
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+}
+.workspace .day-banner label {
+  margin: 0;
+  min-width: 200px;
+}
+.workspace .view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.workspace .profile-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.workspace .slot-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.workspace .slot-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid #dde6df;
+  padding: 1rem 0;
+  font-size: 0.95rem;
+}
+.workspace .chat-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1.3rem;
+  align-items: start;
+}
+.workspace .conversations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.workspace .conversations button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.workspace .chat-thread h2 {
+  border-bottom: 1px solid #dce5df;
+  padding-bottom: 1rem;
+}
+.workspace .message-history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-height: 210px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding: 0.4rem;
+}
+.workspace .message {
+  max-width: 85%;
+  padding: 0.85rem 1rem;
+  border-radius: 0 12px 12px;
+  background: #edf2ef;
+  align-self: flex-start;
+}
+.workspace .message.own-message {
+  background: #e0efe6;
+  border-radius: 12px 0 12px 12px;
+  align-self: flex-end;
+}
+.workspace .message-author {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.workspace .message p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0.3rem 0;
+}
+.workspace .message time {
+  font-size: 0.8rem;
+  color: #52675d;
+}
+.workspace .sync-note {
+  font-size: 0.875rem;
+  color: #536b60;
+  margin-top: 2rem;
+  text-align: center;
+}
+.workspace .location-map {
+  width: 100%;
+  height: 390px;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid #bacfc2;
+}
+.workspace .map-notice {
+  background: #edf3f0;
+  border: 1px dashed #91ad9d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.workspace .map-notice p {
+  margin: 0.4rem 0 0;
+  font-size: 0.95rem;
+}
+.workspace .mapboxgl-ctrl button {
+  padding: 0;
+  min-height: 29px;
+  border: 0;
+  border-radius: 0;
+  background: white;
+  color: #173f38;
+}
+.workspace .mapboxgl-ctrl button:hover:not(:disabled) {
+  background: #edf3ef;
+}
+.workspace .request-marker {
+  min-height: 36px;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #0003;
+}
+.workspace .request-marker.approximate {
+  border-radius: 50%;
+  background: #597a8e;
+  border: 3px solid #dbe9f0;
+  min-width: 56px;
+  min-height: 56px;
+}
+@media (max-width: 1050px) {
+  .workspace .technician-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .workspace .profile-columns {
+    grid-template-columns: 1fr;
+  }
+  .workspace .chat-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .workspace-header {
+    padding: 1rem;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .workspace-brand {
+    font-size: 1.2rem;
+  }
+  .workspace-brand span {
+    font-size: 0.8rem;
+  }
+  .workspace-header-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+  .workspace-nav {
+    padding: 0.7rem;
+    gap: 0.3rem;
+  }
+  .workspace .workspace-nav button {
+    font-size: 0.875rem;
+    padding: 0.7rem 0.8rem;
+    flex-grow: 1;
+  }
+  .workspace-main {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .workspace-title {
+    align-items: flex-start;
+  }
+  .workspace h1 {
+    font-size: 1.9rem;
+  }
+  .workspace .refresh-button {
+    font-size: 0;
+    padding: 0.7rem;
+  }
+  .workspace .refresh-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  .workspace .technician-grid,
+  .workspace .chat-layout,
+  .workspace .field-pair {
+    grid-template-columns: 1fr;
+  }
+  .workspace .work-card {
+    padding: 1.2rem;
+  }
+  .workspace .day-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .workspace .conversations {
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .workspace .message {
+    max-width: 95%;
+  }
+  .workspace .location-map {
+    height: 320px;
+  }
+  .workspace .slot-list li {
+    align-items: flex-start;
+  }
+  .workspace .inline-label {
+    width: 100%;
+  }
+  .workspace .inline-label select {
+    flex: 1;
+  }
+  .workspace .account-menu > div {
+    right: 0;
+  }
+  .workspace .card-actions button {
+    flex-grow: 1;
+  }
+}
+
+.workspace .workspace-nav button:hover:not(:disabled) {
+  background: #eff5f1;
+  color: #204f40;
+}
+.workspace .workspace-nav button.active:hover:not(:disabled) {
+  background: #e5f2ec;
+  color: #114f3f;
+}

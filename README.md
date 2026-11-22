@@ -90,6 +90,17 @@ gcloud builds submit --project=hvac-app-515123 --region=us-central1 --config=clo
 
 The preview serves the homepage with account operations unavailable. It uses a separate `-preview` service, with Cloud Run's default authenticated access for a new service. `.gcloudignore` and `.dockerignore` limit build inputs to application source and build files.
 
+### Automatic preview deployment from GitHub
+
+On a push to `sprint-2/requests-and-messaging`, GitHub Actions runs both the application checks and the isolated Supabase suite. The deploy job submits `cloudbuild.yaml` only after both jobs pass and the deployment secrets are present. It deploys `hvac-app-preview` with authenticated access and records its URL in the Actions run summary.
+
+One-time setup in Google Cloud project `hvac-app-515123`:
+
+1. Enable Cloud Run, Cloud Build, Artifact Registry, and IAM Service Account Credentials. Create a standard Docker repository named `hvac-app` in `us-central1` and a private Cloud Storage bucket named `hvac-app-515123-github-build-source` for staging uploads.
+2. Create `github-actions-deployer`. Grant Cloud Build Editor, Cloud Run Developer, and Logs Writer on the project. Grant Artifact Registry Writer on the `hvac-app` repository and Storage Admin on the staging bucket only. Grant Service Account User to the deployer on its own identity (to submit builds as itself) and the Cloud Run runtime identity (the project's default compute service account for the preview).
+3. Create a JSON key for that account and put it directly into the GitHub Actions repository secret `GCP_SA_KEY`. Set `GCP_PROJECT_ID` to `hvac-app-515123` and `GCP_REGION` to `us-central1`. Keep the JSON file outside the repository and out of chat.
+4. Push to the Sprint 2 branch or rerun a previous Sprint 2 push workflow after completing setup. Open the workflow summary for the deployment result. Pull request runs do not deploy.
+
 ### Full application
 
 For a full deployment, use `_DEPLOY_MODE=full` and pass `_SUPABASE_URL`, `_SUPABASE_PUBLISHABLE_KEY`, and `_SITE_URL` as build substitutions. Use the hosted project's publishable key and the final HTTPS application origin. Configure hosted Supabase migrations, email confirmation/SMTP, and redirect URLs before verifying signup, booking, and messaging. If enabling maps later, configure a restricted Mapbox token and verify map behavior separately.

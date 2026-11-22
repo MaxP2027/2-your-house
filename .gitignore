@@ -153,3 +153,6 @@ playwright-report/
 test-results/
 supabase/.temp/
 supabase/.branches/
+
+# Temporary Google Actions credentials
+gha-creds-*.json

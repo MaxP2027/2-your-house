@@ -13,7 +13,7 @@ permissions:
   contents: read
 concurrency:
   group: verify-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name != 'push' || github.ref != 'refs/heads/sprint-2/requests-and-messaging' }}
 jobs:
   application:
     runs-on: ubuntu-latest
@@ -40,7 +40,9 @@ jobs:
             test-results/
           retention-days: 7
   local-auth:
-    if: github.event_name == 'workflow_dispatch' && inputs.run_local_auth
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.run_local_auth) ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/sprint-2/requests-and-messaging')
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
@@ -79,3 +81,64 @@ jobs:
       - name: Stop local test services
         if: always()
         run: npx supabase stop --no-backup
+  deploy-preview:
+    name: Deploy homepage preview to Cloud Run
+    needs: [application, local-auth]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/sprint-2/requests-and-messaging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
+    steps:
+      - name: Check deployment setup
+        id: setup
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        shell: bash
+        run: |
+          if [[ -z "$GCP_SA_KEY" || -z "$GCP_PROJECT_ID" || -z "$GCP_REGION" ]]; then
+            printf '%s\n' 'ready=false' >> "$GITHUB_OUTPUT"
+            printf '%s\n' 'Checks passed. Deployment skipped because the Google Cloud secrets are incomplete.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [[ "$GCP_PROJECT_ID" != hvac-app-515123 || "$GCP_REGION" != us-central1 ]]; then
+            echo "::error::Configure the project and region for the HVAC Connect preview."
+            exit 1
+          fi
+          printf '%s\n' 'ready=true' >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.setup.outputs.ready == 'true'
+        with:
+          persist-credentials: false
+      - uses: google-github-actions/auth@v3
+        if: steps.setup.outputs.ready == 'true'
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v3
+        if: steps.setup.outputs.ready == 'true'
+      - name: Build and deploy preview
+        if: steps.setup.outputs.ready == 'true'
+        shell: bash
+        run: |
+          gcloud builds submit . \
+            --project="$GCP_PROJECT_ID" \
+            --region="$GCP_REGION" \
+            --config=cloudbuild.yaml \
+            --service-account="projects/${GCP_PROJECT_ID}/serviceAccounts/github-actions-deployer@${GCP_PROJECT_ID}.iam.gserviceaccount.com" \
+            --gcs-source-staging-dir="gs://${GCP_PROJECT_ID}-github-build-source/preview" \
+            --substitutions="_DEPLOY_MODE=preview,_SERVICE=hvac-app-preview,_REGION=$GCP_REGION" \
+            --suppress-logs --quiet
+      - name: Record the deployed service URL
+        if: steps.setup.outputs.ready == 'true'
+        shell: bash
+        run: |
+          url=$(gcloud run services describe hvac-app-preview \
+            --project="$GCP_PROJECT_ID" --region="$GCP_REGION" \
+            --format='value(status.url)')
+          if [[ "$url" != https://* ]]; then
+            echo "::error::Cloud Run did not report a service URL."
+            exit 1
+          fi
+          printf '%s\n' "Preview service: $url" >> "$GITHUB_STEP_SUMMARY"

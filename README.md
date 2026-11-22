@@ -80,6 +80,18 @@ Build before type-checking on a fresh checkout so Next.js generates route types.
 
 ## Deployment and rollback
 
-Deployment remains deferred. Before publishing, configure the hosted Supabase project, email confirmation/SMTP, application origin and redirect URLs, migrations, and hosting environment. Re-run account, privacy, booking, and browser checks in that environment. If enabling maps later, configure a restricted Mapbox token and verify map behavior separately.
+### Google Cloud homepage preview
+
+`cloudbuild.yaml` builds the Linux image, pushes it to Artifact Registry, and deploys it to Cloud Run. Run this from the project root after enabling the Cloud Build, Artifact Registry, and Cloud Run APIs and creating the Docker repository `hvac-app` in `us-central1`. The Cloud Build service account needs permission to write to that repository, deploy to Cloud Run, use the Cloud Run runtime identity, and write build logs.
+
+```powershell
+gcloud builds submit --project=hvac-app-515123 --region=us-central1 --config=cloudbuild.yaml --substitutions="_DEPLOY_MODE=preview,_SERVICE=hvac-app-preview" .
+```
+
+The preview serves the homepage with account operations unavailable. It uses a separate `-preview` service, with Cloud Run's default authenticated access for a new service. `.gcloudignore` and `.dockerignore` limit build inputs to application source and build files.
+
+### Full application
+
+For a full deployment, use `_DEPLOY_MODE=full` and pass `_SUPABASE_URL`, `_SUPABASE_PUBLISHABLE_KEY`, and `_SITE_URL` as build substitutions. Use the hosted project's publishable key and the final HTTPS application origin. Configure hosted Supabase migrations, email confirmation/SMTP, and redirect URLs before verifying signup, booking, and messaging. If enabling maps later, configure a restricted Mapbox token and verify map behavior separately.
 
 Back up records before applying migrations. Roll back application code separately from data; use forward database fixes when possible and never drop customer data as an automatic rollback. See [deployment preparation](docs/SPRINT-2.md#deployment-preparation).

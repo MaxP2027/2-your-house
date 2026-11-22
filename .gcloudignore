@@ -1,0 +1,17 @@
+# Upload only inputs required for the Cloud Run build.
+**
+!cloudbuild.yaml
+!Dockerfile
+!.dockerignore
+!package.json
+!package-lock.json
+!next.config.ts
+!next-env.d.ts
+!postcss.config.mjs
+!tsconfig.json
+!src/
+!src/**
+!public/
+!public/**
+**/.env*
+**/.npmrc

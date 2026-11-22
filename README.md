@@ -1,121 +1,85 @@
-> Sprint 1 code is now in progress. See [current status and verification](docs/SPRINT-1-STATUS.md). The original proposal below describes planned capabilities, not completed functionality.
-
-## Run the current increment
-
-Requires Node.js 22 or newer and npm. Run `npm ci`, then `npm run dev` and open http://127.0.0.1:3000. The homepage runs without Supabase configuration.
-
-For real accounts, install/start Docker, run `npm run db:start`, then `npm run db:reset` against the local project only. Copy `.env.example` to `.env.local` and fill in the local publishable key from `npx supabase status`. Restart the application. Open the local email inbox at http://127.0.0.1:54324 to confirm test accounts.
-
-Use `npm run lint`, `npm run typecheck`, and `npm run build` for the checks currently verified. Browser and authentication integration tests remain pending. Never put service-role keys in public environment variables.
-
----
 # HVAC Connect
 
-A planned web application connecting homeowners with freelance HVAC technicians in their city.
+A web application connecting homeowners with independent HVAC technicians in their city.
 
-**Author:** Maximiliano Perez  
-**Project status:** Proposal and planning. Application code, tests, and deployment have not been created. “HVAC Connect” is a working project name.
+**Author:** Maximiliano Perez
 
-## Project overview
+**Current increment:** Sprint 2 on `sprint-2/requests-and-messaging`. Local development only; no production deployment has been performed.
 
-This project aims to help freelance HVAC technicians promote their services and receive local house-call requests while giving homeowners more options for finding qualified professionals.
+## What works in this increment
 
-Customers will be able to describe an HVAC problem, attach photos, and send a service request to a technician. Technicians will review requests and accept or decline jobs. Private messaging, job status updates, and saved service history will help both parties manage each request from submission to completion.
+- Customer and technician registration, email confirmation, login, and logout.
+- Technician profiles, service-city filtering, and dated availability.
+- Private appointment requests that reserve a slot until accepted, declined, or cancelled.
+- Technician request management and a daily agenda.
+- Persistent private text conversations, with Realtime refresh and a five-second polling fallback.
+- Approximate job locations before acceptance; exact addresses available to the assigned technician while accepted or completed.
 
-## Planned features
+Sprint 2 uses the request list and daily agenda. Customers enter location coordinates manually. Interactive maps are deferred and can be enabled later with a Mapbox public token. Profiles do not represent verified licenses.
 
-### Customers
+Photos, payments, password recovery, license review, calendar integrations, and route optimization are deferred. See the [Sprint 2 guide](docs/SPRINT-2.md) and [phase/verification report](docs/SPRINT-2-REPORT.md). The [original proposal](docs/PROJECT-PROPOSAL.md) records the wider intended product.
 
-- Create an account, sign in, and recover a password.
-- Browse technician profiles, services, service areas, availability, and licensing information.
-- Submit service requests with descriptions and photos.
-- Exchange private messages and photo attachments with technicians.
-- Receive in-app notifications for messages and request updates.
-- Track job statuses and view previous requests and conversations.
+## Start the app
 
-### Technicians
+Requires Node.js 22 or newer, npm, and Docker Desktop with its engine running. In PowerShell:
 
-- Create a professional profile and submit licensing information for review.
-- Manage offered services, service areas, and availability.
-- View incoming requests and approximate job locations on a map.
-- Accept or decline requests and update accepted jobs as work progresses.
-- Communicate with customers and view job history.
+```powershell
+cd "C:\Users\maxcp\OneDrive\Desktop\Projects\2-your-house"
+npm.cmd ci
+npm.cmd run db:start
+```
 
-### Administration
+For an existing local database, apply new migrations with `npx.cmd supabase migration up --local`. Avoid `db:reset` unless you intend to erase and rebuild disposable local data.
 
-- Review technician licensing information and record its review status.
-- Review reported accounts, messages, and service issues.
-- Manage account access when necessary.
+If `.env.local` is not already configured, copy [.env.example](.env.example) to `.env.local` and use values from `npx.cmd supabase status`:
 
-## Proposed technology stack
+| Variable                               | Purpose                                          |
+| -------------------------------------- | ------------------------------------------------ |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Local API URL, normally `http://127.0.0.1:54321` |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Local publishable key                            |
+| `NEXT_PUBLIC_SITE_URL`                 | `http://127.0.0.1:3000` for this local setup     |
+| `NEXT_PUBLIC_MAPBOX_TOKEN`             | Optional public token for interactive maps       |
 
-| Area | Technology | Purpose |
-| --- | --- | --- |
-| Frontend | React, Next.js App Router, TypeScript | Pages, dashboards, and application interactions |
-| Styling | Tailwind CSS, shadcn/ui | Responsive, accessible interface components |
-| Backend | Next.js Route Handlers, Zod | Business rules, request validation, and API endpoints |
-| Database | Supabase PostgreSQL, PostGIS | Persistent records and location-based searches |
-| Authentication | Supabase Auth | Accounts, sessions, and password recovery |
-| Authorization | PostgreSQL row-level security and server-side checks | Customer, technician, and administrator permissions |
-| Messaging | Supabase Realtime and PostgreSQL | Live updates with persistent message history |
-| File storage | Supabase Storage | Private problem photos and message attachments |
-| Maps | Mapbox GL JS, Mapbox Geocoding API | Map display and address-to-location conversion |
-| Database development | Supabase client, SQL migrations | Data access and versioned schema changes |
-| Testing | Vitest, React Testing Library, Playwright, axe-core | Logic, interface, browser, and accessibility tests |
-| Hosting | Vercel, Supabase | Application and managed backend hosting |
-| Development tools | GitHub, GitHub Actions, ESLint, Prettier | Version control, automated checks, and formatting |
-| Monitoring | Sentry | Application error tracking |
+Keep private environment files out of Git. Never use a Supabase service-role key in a `NEXT_PUBLIC_` variable.
 
-## Core workflow
+```powershell
+npm.cmd run dev
+```
 
-1. A customer creates an account and selects a technician serving their area.
-2. The customer submits a problem description, photos, and a service location.
-3. The technician reviews the request and its approximate location, then accepts or declines it.
-4. After acceptance, the assigned technician can access the exact service address.
-5. The customer and technician communicate through private messaging.
-6. The technician updates the job status, and both users retain access to their history.
+Open **http://127.0.0.1:3000** and keep the terminal running. Confirm new accounts through the local email inbox at **http://127.0.0.1:54324**. The local database dashboard is at **http://127.0.0.1:54323**. Use separate browser profiles for a customer and a technician.
 
-## Data and privacy requirements
+## Technology
 
-Planned records include user profiles, technician services and credentials, service requests, job status history, conversations, messages, attachments, notifications, and issue reports.
+Next.js App Router, React, TypeScript, CSS/Tailwind, Zod, Supabase Auth/PostgreSQL/Realtime, and Mapbox GL JS. SQL migrations and row-level security enforce permissions independently of the interface. Dependencies are pinned in `package.json` and `package-lock.json`.
 
-- Restrict conversations, photos, and job details to authorized participants and administrators with a justified support need.
-- Keep precise customer addresses out of public profiles and general job maps.
-- Use private file storage, controlled attachment access, and upload size and type validation.
-- Enforce permissions in the backend and database, alongside interface controls.
-- Store secrets outside source control and document required configuration before deployment.
-- Define credential review, data retention, and account deletion procedures before launch. Submitting licensing information alone will not mark a technician as verified.
+## Checks and production build
 
-## Development roadmap
+```powershell
+npm.cmd run lint
+npm.cmd test
+npm.cmd run build
+npm.cmd run typecheck
+npx.cmd playwright install chromium
+npm.cmd run test:e2e
+npm.cmd run db:test
+```
 
-Development will follow the Universal Full-Stack Builder's 17-phase workflow. All phases are currently **not started**.
+Build before type-checking on a fresh checkout so Next.js generates route types. For real local account/booking tests, configure the ignored `.env.test.local` as described in the [test guide](docs/SPRINT-2.md#validation), then run `npm.cmd run test:e2e:auth`.
 
-| Phase | Planned work |
-| --- | --- |
-| 1 | Repository scaffold, Git conventions, formatting, and initial automated checks |
-| 2 | Database schema, migrations, data access, and sample records |
-| 3 | Authentication, account recovery, and role-based permissions |
-| 4 | Validated backend endpoints and service-request business rules |
-| 5 | Frontend routing, layouts, dashboards, and data fetching |
-| 6 | Accessible, responsive forms and loading, empty, and error states |
-| 7 | Frontend/backend integration and live messaging |
-| 8 | Photo uploads, maps, location search, and notifications |
-| 9 | Core workflow visibility and error monitoring |
-| 10 | Account settings, technician profiles, and administrator review tools |
-| 11 | Browser test infrastructure and isolated test accounts |
-| 12 | Customer/technician journeys, edge cases, mobile, and accessibility tests |
-| 13 | Security review, dependency checks, and performance improvements |
-| 14 | Deployment checks, environment separation, and migration safeguards |
-| 15 | Setup instructions, architecture documentation, and operational guides |
-| 16 | Production deployment, secrets configuration, and rollback planning |
-| 17 | Live-site verification, smoke tests, monitoring, and handoff |
+`npm.cmd run build` and `npm.cmd run start` serve a local production build. [GitHub Actions](.github/workflows/ci.yml) defines checks for pushes and pull requests, plus a manually triggered isolated Supabase integration job; it does not deploy the app. Executed results and remaining verification are recorded in the [report](docs/SPRINT-2-REPORT.md).
 
-## Local setup and validation
+## Structure
 
-The application is not runnable yet. Installation commands, environment variable names, database setup, and development scripts will be documented when the project is scaffolded.
+- `src/app/`: homepage, account pages, protected dashboard, and API handlers.
+- `src/components/marketplace/`: discovery, requests, profile/availability, messages, and map UI.
+- `src/lib/`: validation, response types, authentication, and Supabase clients.
+- `supabase/migrations/`: account and marketplace schema/policies.
+- `supabase/tests/database/`: SQL authorization and booking assertions.
+- `tests/`: unit, public browser, and real local account/marketplace checks.
+- `docs/`: scope, setup, verification, and deployment preparation.
 
-No tests have been run and no live deployment is available. Planned validation covers account access, cross-user privacy, request submission, acceptance and decline, persistent messaging, photo permissions, location privacy, mobile layouts, and keyboard accessibility.
+## Deployment and rollback
 
-## Initial scope
+Deployment remains deferred. Before publishing, configure the hosted Supabase project, email confirmation/SMTP, application origin and redirect URLs, migrations, and hosting environment. Re-run account, privacy, booking, and browser checks in that environment. If enabling maps later, configure a restricted Mapbox token and verify map behavior separately.
 
-The first release will focus on accounts, technician profiles, service requests, messaging, photos, maps, and job history. Payments, public ratings, automated license verification, and native mobile apps are outside the initial scope.
+Back up records before applying migrations. Roll back application code separately from data; use forward database fixes when possible and never drop customer data as an automatic rollback. See [deployment preparation](docs/SPRINT-2.md#deployment-preparation).

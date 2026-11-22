@@ -66,7 +66,7 @@ npm.cmd run db:test
 
 Build before type-checking on a fresh checkout so Next.js generates route types. For real local account/booking tests, configure the ignored `.env.test.local` as described in the [test guide](docs/SPRINT-2.md#validation), then run `npm.cmd run test:e2e:auth`.
 
-`npm.cmd run build` and `npm.cmd run start` serve a local production build. [GitHub Actions](.github/workflows/ci.yml) defines checks for pushes and pull requests, plus a manually triggered isolated Supabase integration job; it does not deploy the app. Executed results and remaining verification are recorded in the [report](docs/SPRINT-2-REPORT.md).
+`npm.cmd run build` and `npm.cmd run start` serve a local production build. [GitHub Actions](.github/workflows/ci.yml) checks pushes and pull requests. On Sprint 2 pushes it also tests against isolated Supabase and deploys the homepage preview after both jobs pass and deployment secrets are available. Executed results and remaining verification are recorded in the [report](docs/SPRINT-2-REPORT.md).
 
 ## Structure
 
@@ -97,7 +97,7 @@ On a push to `sprint-2/requests-and-messaging`, GitHub Actions runs both the app
 One-time setup in Google Cloud project `hvac-app-515123`:
 
 1. Enable Cloud Run, Cloud Build, Artifact Registry, and IAM Service Account Credentials. Create a standard Docker repository named `hvac-app` in `us-central1` and a private Cloud Storage bucket named `hvac-app-515123-github-build-source` for staging uploads.
-2. Create `github-actions-deployer`. Grant Cloud Build Editor, Cloud Run Developer, and Logs Writer on the project. Grant Artifact Registry Writer on the `hvac-app` repository and Storage Admin on the staging bucket only. Grant Service Account User to the deployer on its own identity (to submit builds as itself) and the Cloud Run runtime identity (the project's default compute service account for the preview).
+2. Create `github-actions-deployer`. Grant Cloud Build Editor, Cloud Run Developer, and Logs Writer on the project. Grant Artifact Registry Writer on the `hvac-app` repository and Storage Admin on the staging bucket only. Grant Service Account User to the deployer on its own identity (to submit builds as itself) and the Cloud Run runtime identity (`986702390468-compute@developer.gserviceaccount.com` for this project).
 3. Create a JSON key for that account and put it directly into the GitHub Actions repository secret `GCP_SA_KEY`. Set `GCP_PROJECT_ID` to `hvac-app-515123` and `GCP_REGION` to `us-central1`. Keep the JSON file outside the repository and out of chat.
 4. Push to the Sprint 2 branch or rerun a previous Sprint 2 push workflow after completing setup. Open the workflow summary for the deployment result. Pull request runs do not deploy.
 

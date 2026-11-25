@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Brand } from "@/components/brand";
 import { redirect } from "next/navigation";
 import { getAccount } from "@/lib/auth";
 import AccountForm from "@/components/account-form";
@@ -14,11 +14,8 @@ export default async function Page() {
         Skip to workspace
       </a>
       <header className="workspace-header">
-        <Link href="/" className="workspace-brand">
-          HVAC Connect<span>Local people. Lasting comfort.</span>
-        </Link>
+        <Brand />
         <div className="workspace-header-actions">
-          <Link href="/">Homepage</Link>
           <details className="account-menu">
             <summary>Your account</summary>
             <div>

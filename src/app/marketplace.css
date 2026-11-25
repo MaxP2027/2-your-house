@@ -1,73 +1,46 @@
 .workspace {
   min-height: 100vh;
-  background: #f3f6f5;
-  color: #173f38;
-  font-size: 1rem;
-}
-.workspace * {
-  box-sizing: border-box;
-}
-.workspace .skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -8rem;
-  z-index: 20;
-  background: white;
-  padding: 1rem;
-}
-.workspace .skip-link:focus {
-  top: 1rem;
+  background: var(--paper);
+  color: var(--ink);
 }
 .workspace-header {
-  background: #fff;
-  padding: 1.25rem max(1.5rem, calc((100vw - 1240px) / 2));
-  border-bottom: 1px solid #dce5e1;
+  background: var(--surface);
+  padding: 0.6rem max(var(--gutter), calc((100vw - var(--content)) / 2));
+  border-bottom: 1px solid var(--line);
+  min-height: 4.75rem;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1rem;
 }
-.workspace-brand {
-  font-size: 1.5rem;
-  letter-spacing: -0.04em;
-  text-decoration: none;
-  font-weight: 800;
-}
-.workspace-brand span {
-  display: block;
-  font-weight: 400;
-  font-size: 0.875rem;
-  letter-spacing: 0;
-  color: #536b61;
-  margin-top: 0.25rem;
-}
-.workspace-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-.workspace-header-actions > a {
-  font-size: 0.95rem;
+.workspace-body {
+  width: min(100% - 2 * var(--gutter), var(--content));
+  margin-inline: auto;
+  display: grid;
+  gap: 1rem;
+  padding-top: 1rem;
 }
 .workspace .account-menu {
   position: relative;
 }
 .workspace .account-menu summary {
   cursor: pointer;
+  min-height: 44px;
+  line-height: 1.5;
+  padding: 0.6rem 0.3rem;
   font-weight: 600;
 }
 .workspace .account-menu > div {
   position: absolute;
   right: 0;
-  top: 2rem;
+  top: 3rem;
   z-index: 30;
   width: 290px;
   max-width: 85vw;
   background: white;
-  border: 1px solid #cadbd2;
+  border: 1px solid var(--line);
   border-radius: 12px;
-  box-shadow: 0 12px 40px #143b2820;
+
   padding: 1.3rem;
   overflow-wrap: anywhere;
 }
@@ -76,17 +49,18 @@
   font-size: 0.9rem;
 }
 .workspace-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.8rem max(1.5rem, calc((100vw - 1240px) / 2));
-  background: #fff;
-  border-bottom: 1px solid #dce5e1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 0.35rem;
 }
 .workspace .workspace-nav button {
   border: 1px solid transparent;
   background: transparent;
-  color: #475e55;
+  color: var(--muted);
   font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
@@ -95,29 +69,32 @@
   min-height: 44px;
 }
 .workspace .workspace-nav button.active {
-  background: #e5f2ec;
+  background: var(--tint);
   border-color: #bfd6c8;
-  color: #114f3f;
+  color: var(--ink);
 }
 .workspace-main {
-  max-width: 1288px;
-  padding: 2.25rem 1.5rem 4rem;
-  margin: auto;
+  min-width: 0;
+  padding-bottom: 4rem;
 }
 .workspace h1 {
-  font-size: clamp(1.9rem, 3.4vw, 2.65rem);
-  letter-spacing: -0.045em;
+  font-family: var(--display);
+  font-size: clamp(2.55rem, 4.4vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   line-height: 1.15;
   margin: 0.5rem 0;
 }
 .workspace h2 {
   font-size: 1.5rem;
+  font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.25;
   margin: 0 0 0.8rem;
 }
 .workspace h3 {
   font-size: 1.2rem;
+  font-weight: 700;
   margin: 0.25rem 0 0.75rem;
 }
 .workspace p {
@@ -127,7 +104,7 @@
   font-size: 0.875rem;
   letter-spacing: 0.07em;
   font-weight: 600;
-  color: #537064;
+  color: var(--muted);
   margin: 0;
 }
 .workspace-title {
@@ -139,16 +116,16 @@
 }
 .workspace-lead {
   max-width: 760px;
-  color: #51675e;
+  color: var(--muted);
   font-size: 1.05rem;
   margin: 0.5rem 0 1.5rem;
 }
 .workspace .work-card {
   padding: 1.5rem;
-  border: 1px solid #dce5df;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 2px 4px #173f3804;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: var(--surface);
+
   min-width: 0;
 }
 .workspace section {
@@ -156,13 +133,13 @@
 }
 .workspace .muted {
   font-size: 0.9rem;
-  color: #52675d;
+  color: var(--muted);
   line-height: 1.55;
 }
 .workspace .empty {
   text-align: center;
   padding: 2rem;
-  color: #51675e;
+  color: var(--muted);
 }
 .workspace .empty h2 {
   color: #234e40;
@@ -190,22 +167,22 @@
   font-size: 0.95rem;
   line-height: 1.3;
   min-height: 44px;
-  border: 1px solid #174e42;
-  background: #174e42;
+  border: 1px solid var(--ink);
+  background: var(--ink);
   padding: 0.8rem 1.15rem;
   border-radius: 7px;
   font-weight: 600;
 }
 .workspace button:hover:not(:disabled) {
-  background: #0f3d33;
+  background: var(--brand-dark);
 }
 .workspace button.subtle {
   background: #fff;
-  color: #204f40;
-  border-color: #bed0c5;
+  color: var(--ink);
+  border-color: var(--field-border);
 }
 .workspace button.subtle:hover:not(:disabled) {
-  background: #eff5f1;
+  background: var(--tint);
 }
 .workspace .refresh-button,
 .workspace .view-toggle button {
@@ -223,9 +200,9 @@
 .workspace select {
   width: 100%;
   font: inherit;
-  color: #173f38;
+  color: var(--ink);
   padding: 0.8rem;
-  border: 1px solid #8ba396;
+  border: 1px solid var(--field-border);
   border-radius: 7px;
   background: #fff;
   min-height: 44px;
@@ -272,7 +249,7 @@
   min-height: 20px;
   height: 20px;
   margin: 0;
-  accent-color: #174e42;
+  accent-color: var(--ink);
 }
 .workspace .city-search {
   display: flex;
@@ -313,11 +290,12 @@
 .workspace .technician-avatar {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 0.45rem;
   background: #e3efe7;
   display: grid;
   place-items: center;
   font-size: 1.5rem;
+  font-weight: 700;
   font-weight: bold;
   color: #205843;
   margin-bottom: 1.2rem;
@@ -343,7 +321,7 @@
   margin: 0 0 0.5rem;
 }
 .workspace .bio {
-  color: #52675d;
+  color: var(--muted);
   overflow-wrap: anywhere;
   flex: 1;
 }
@@ -418,10 +396,10 @@
   color: #7c4136;
 }
 .workspace .day-banner {
-  background: #164e42;
+  background: var(--ink);
   color: white;
   padding: 1.5rem;
-  border-radius: 14px;
+  border-radius: 0.45rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -491,7 +469,7 @@
   overflow-wrap: anywhere;
 }
 .workspace .chat-thread h2 {
-  border-bottom: 1px solid #dce5df;
+  border-bottom: 1px solid var(--line);
   padding-bottom: 1rem;
 }
 .workspace .message-history {
@@ -511,7 +489,7 @@
   align-self: flex-start;
 }
 .workspace .message.own-message {
-  background: #e0efe6;
+  background: var(--tint);
   border-radius: 12px 0 12px 12px;
   align-self: flex-end;
 }
@@ -526,7 +504,7 @@
 }
 .workspace .message time {
   font-size: 0.8rem;
-  color: #52675d;
+  color: var(--muted);
 }
 .workspace .sync-note {
   font-size: 0.875rem;
@@ -558,7 +536,7 @@
   border: 0;
   border-radius: 0;
   background: white;
-  color: #173f38;
+  color: var(--ink);
 }
 .workspace .mapboxgl-ctrl button:hover:not(:disabled) {
   background: #edf3ef;
@@ -588,40 +566,28 @@
     grid-template-columns: 220px minmax(0, 1fr);
   }
 }
+.workspace .workspace-nav button {
+  justify-content: flex-start;
+  text-align: left;
+}
+.workspace .workspace-nav button svg {
+  flex: none;
+}
+.workspace .workspace-nav button:hover:not(:disabled) {
+  background: var(--tint);
+  color: var(--ink);
+}
+
 @media (max-width: 700px) {
-  .workspace-header {
-    padding: 1rem;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  .workspace-brand {
-    font-size: 1.2rem;
-  }
-  .workspace-brand span {
-    font-size: 0.8rem;
-  }
-  .workspace-header-actions {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.6rem;
-  }
-  .workspace-nav {
-    padding: 0.7rem;
-    gap: 0.3rem;
+  .workspace-header .brand {
+    font-size: 1.45rem;
   }
   .workspace .workspace-nav button {
     font-size: 0.875rem;
-    padding: 0.7rem 0.8rem;
-    flex-grow: 1;
-  }
-  .workspace-main {
-    padding: 1.5rem 1rem 3rem;
+    padding: 0.7rem 0.6rem;
   }
   .workspace-title {
     align-items: flex-start;
-  }
-  .workspace h1 {
-    font-size: 1.9rem;
   }
   .workspace .refresh-button {
     font-size: 0;
@@ -637,7 +603,7 @@
     grid-template-columns: 1fr;
   }
   .workspace .work-card {
-    padding: 1.2rem;
+    padding: 1.125rem;
   }
   .workspace .day-banner {
     flex-direction: column;
@@ -662,19 +628,27 @@
   .workspace .inline-label select {
     flex: 1;
   }
-  .workspace .account-menu > div {
-    right: 0;
-  }
   .workspace .card-actions button {
     flex-grow: 1;
   }
 }
 
-.workspace .workspace-nav button:hover:not(:disabled) {
-  background: #eff5f1;
-  color: #204f40;
+@media (min-width: 45rem) {
+  .workspace-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
-.workspace .workspace-nav button.active:hover:not(:disabled) {
-  background: #e5f2ec;
-  color: #114f3f;
+
+@media (min-width: 60rem) {
+  .workspace-body {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: 2.5rem;
+    padding-top: 2rem;
+  }
+  .workspace-nav {
+    grid-template-columns: 1fr;
+    align-self: start;
+    position: sticky;
+    top: 1rem;
+  }
 }

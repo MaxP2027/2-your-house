@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAccount } from "@/lib/auth";
 import AccountForm from "@/components/account-form";
+import AccountShell from "@/components/account-shell";
+
 export default async function Page({
   searchParams,
 }: {
@@ -10,18 +12,20 @@ export default async function Page({
   if (await getAccount()) redirect("/dashboard");
   const q = await searchParams;
   return (
-    <main className="account">
-      <Link href="/">← HVAC Connect</Link>
-      <h1>Welcome back.</h1>
-      <p>Log in to access your account.</p>
+    <AccountShell
+      title="Log in"
+      intro="Open your workspace to manage appointments and messages."
+      links={
+        <>
+          <Link href="/signup">Create an account</Link>
+          <Link href="/check-email">Email confirmation help</Link>
+        </>
+      }
+    >
       <AccountForm
         mode="login"
         role={q.role === "technician" ? "technician" : "customer"}
       />
-      <p>
-        <Link href="/signup">New here? Create account</Link>
-      </p>
-      <Link href="/check-email">Email confirmation help</Link>
-    </main>
+    </AccountShell>
   );
 }

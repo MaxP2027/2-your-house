@@ -4,20 +4,23 @@ import AxeBuilder from "@axe-core/playwright";
 test("homepage navigation and role selection work", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Comfort starts",
+    "Find local",
   );
   await page.getByRole("link", { name: "Log in", exact: true }).first().click();
   await expect(page).toHaveURL(/\/login$/);
   await expect(page.getByLabel("Email address")).toBeVisible();
   await page.goto("/");
   await page
-    .getByRole("link", { name: "Join as a Technician", exact: true })
+    .getByRole("link", { name: "Join as a technician", exact: true })
     .click();
   await expect(page.getByLabel("Account type")).toHaveValue("technician");
   await page.getByLabel("Account type").selectOption("customer");
   await expect(page.getByLabel("Account type")).toHaveValue("customer");
   await page.goto("/");
-  await page.getByRole("link", { name: /Find HVAC Help/ }).click();
+  await page
+    .getByRole("main")
+    .getByRole("link", { name: "Find HVAC help" })
+    .click();
   await expect(page.getByLabel("Account type")).toHaveValue("customer");
 });
 
@@ -53,6 +56,8 @@ test("login network failure clears passwords and permits retry", async ({
 
 test("homepage supports keyboard navigation", async ({ page }) => {
   await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(page.locator(":focus")).toHaveAttribute("href", "#main-content");
   await page.keyboard.press("Tab");
   await expect(page.locator(":focus")).toHaveAttribute("href", "/");
   await page.keyboard.press("Tab");

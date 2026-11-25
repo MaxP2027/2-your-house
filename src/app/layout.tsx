@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
+
+const title = "HVAC Connect | Find independent heating and cooling technicians";
+const description =
+  "Find HVAC technicians by service city, request an appointment, and keep your heating and cooling conversations in one place.";
+
 export const metadata: Metadata = {
-  title: {
-    default: "HVAC Connect | Comfort starts with a connection",
-    template: "%s | HVAC Connect",
-  },
-  description:
-    "A new way for homeowners and independent HVAC technicians to connect. Create your customer or technician account.",
+  title: { default: title, template: "%s | HVAC Connect" },
+  description,
+  openGraph: { title, description, siteName: "HVAC Connect", type: "website" },
 };
+
 export default function RootLayout({
   children,
 }: {

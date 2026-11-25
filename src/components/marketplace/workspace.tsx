@@ -229,15 +229,15 @@ export default function Workspace({
         .sort((a, b) => a.created_at.localeCompare(b.created_at))
     : [];
   const heading = {
-    discover: "Find the right local help.",
+    discover: "Find a technician",
     requests:
-      role === "technician" ? "Your incoming work." : "Your service requests.",
-    messages: "Keep the conversation going.",
-    day: "Make room for a good day.",
-    profile: "Your work, on your terms.",
+      role === "technician" ? "Incoming requests" : "Your service requests",
+    messages: "Messages",
+    day: "Your day",
+    profile: "Profile & availability",
   }[view];
   return (
-    <>
+    <div className="workspace-body">
       <nav className="workspace-nav" aria-label="Workspace navigation">
         {nav.map(({ id, label, Icon }) => (
           <button
@@ -719,7 +719,7 @@ export default function Workspace({
           </>
         )}
       </main>
-    </>
+    </div>
   );
 }
 function RequestCard({
